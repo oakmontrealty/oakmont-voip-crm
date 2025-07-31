@@ -1,2 +1,3 @@
 # Oakmont VoIP CRM
-Initial scaffold placeholder.
+Initial placeholder.
+
