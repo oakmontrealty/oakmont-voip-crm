@@ -1,0 +1,12 @@
+{
+  "name": "oakmont-mobile",
+  "private": true,
+  "version": "0.1.0",
+  "main": "App.js",
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.73.0",
+    "@supabase/supabase-js": "^2.39.4",
+    "twilio-chat": "^6.3.0"
+  }
+}

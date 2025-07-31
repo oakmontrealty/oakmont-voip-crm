@@ -1,0 +1,9 @@
+{
+  "name": "backend",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.4",
+    "twilio": "^4.19.1",
+    "dotenv": "^16.4.5"
+  }
+}
