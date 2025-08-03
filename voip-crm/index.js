@@ -126,7 +126,28 @@ app.get('/profile', async (req, res) => {
     res.status(500).json({ error: 'Unable to fetch profile' });
   }
 });
-
+// Test Call endpoint: initiates a call to the specified number using Twilio
+app.get('/test-call', async (req, res) => {
+  const to = req.query.to;
+  if (!to) {
+    return res.status(400).json({ error: 'Missing to parameter' });
+  }
+  try {
+    const client = twilio(
+      process.env.TWILIO_ACCOUNT_SID,
+      process.env.TWILIO_AUTH_TOKEN
+    );
+    const call = await client.calls.create({
+      to,
+      from: process.env.TWILIO_DEFAULT_FROM,
+      twiml: '<Response><Say>Hello Terence, this is the VOIP‑CRM test call.</Say></Response>'
+    });
+    return res.json({ sid: call.sid });
+  } catch (error) {
+    console.error('Error initiating test call:', error);
+    return res.status(500).json({ error: 'Failed to initiate call' });
+  }
+});
 app.listen(port, () => {
   console.log(`VoIP CRM server listening on port ${port}`);
 });
