@@ -1,0 +1,1 @@
+ ```js const fs = require('fs'); const { parse } = require('csv-parse/sync'); const { createClient } = require('@supabase/supabase-js'); (async () => { const [, , csvPath, state] = process.argv; if (!csvPath
