@@ -1,1 +1,1 @@
- ```js const fs = require('fs'); const { parse } = require('csv-parse/sync'); const { createClient } = require('@supabase/supabase-js'); (async () => { const [, , csvPath, state] = process.argv; if (!csvPath
+curl -s "https://data.sa.gov.au/data/dataset/a75c-sales.csv" -o /tmp/sa.csv && node scripts/loadPublicSales.js /tmp/sa.csv SA
