@@ -26,9 +26,11 @@ jobs:
       - name: Log EAS CLI version
         run: eas --version
 
-      - name: Trigger EAS Build & auto-submit
-        run: |
-          eas build --profile ios \
-            --auto-submit \
-            --non-interactive \
-            --platform ios
+     - name: Trigger EAS Build & auto-submit
+  working-directory: backend/oakmont-voip-crm/mobile   # Expo project root
+  run: |
+    eas build --profile ios \
+      --auto-submit \
+      --non-interactive \
+      --platform ios
+
