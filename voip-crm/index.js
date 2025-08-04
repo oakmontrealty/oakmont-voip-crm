@@ -26,7 +26,9 @@ app.use(express.json());
 
 // Alias so https://.../test-call works
 app.all('/test-call', (req, res, next) => {
-  req.url = '/api/test-call';   // rewrite to real handler
+  // rewrite to actual handler. Using the same path ensures the handler
+  // defined below will be invoked.
+  req.url = '/test-call';
   next();
 });
 
@@ -148,7 +150,7 @@ app.get('/test-call', async (req, res) => {
     const call = await client.calls.create({
       to,
       from: process.env.TWILIO_DEFAULT_FROM,
-      twiml: '<Response><Say>Hello Terence, this is the VOIP‑CRM test call.</Say></Response>'
+      twiml: '<Response><Say>Hello Terence, this is the VOIP‑CRM test call.</Say></Response>'
     });
     return res.json({ sid: call.sid });
   } catch (error) {
