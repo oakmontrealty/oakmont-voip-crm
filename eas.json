@@ -1,0 +1,16 @@
+{
+  "build": {
+    "ios": {
+      "workflow": "managed",
+      "scheme": "oakmontvoipcrm",
+      "buildType": "release",
+      "bundleIdentifier": "com.oakmont.voipcrm"
+    }
+  },
+  "submit": {
+    "ios": {
+      "ascAppId": "$ASC_APP_ID",
+      "appleTeamId": "$APPLE_TEAM_ID"
+    }
+  }
+}
