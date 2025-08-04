@@ -1,5 +1,5 @@
 const fs = require('fs');
-const parse = require('csv-parse');
+const { parse } = require('csv-parse');
 
 // Usage: node loadPublicSales.js <csvFile> <STATE_CODE>
 const [, , filePath, state] = process.argv;
