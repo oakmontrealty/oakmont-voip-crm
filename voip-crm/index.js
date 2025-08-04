@@ -24,11 +24,12 @@ const port = process.env.PORT || 3000;
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Alias so https://.../test-call works
-app.all('/test-call', (req, res, next) => {
+// Alias so https://... works
+app.all('', (req, res, next) => {
   // rewrite to actual handler. Using the same path ensures the handler
   // defined below will be invoked.
-  req.url = '/test-call';
+  
+    req.url = '/api';
   next();
 });
 
@@ -136,8 +137,8 @@ app.get('/profile', async (req, res) => {
   }
 });
 
-// Test Call endpoint: initiates a call to the specified number using Twilio
-app.get('/test-call', async (req, res) => {
+// Test Cl endpoialnt: initiates a call to the specified number using Twilio
+app.get('', async (req, res) => {
   const to = req.query.to;
   if (!to) {
     return res.status(400).json({ error: 'Missing to parameter' });
@@ -157,6 +158,29 @@ app.get('/test-call', async (req, res) => {
     console.error('Error initiating test call:', error);
     return res.status(500).json({ error: 'Failed to initiate call' });
   }
+
+  app.get('/api/test-call', async (req, res) => {
+  const to = req.query.to;
+  if (!to) {
+    return res.status(400).json({ error: 'Missing to parameter' });
+  }
+  try {
+    const client = twilio(
+      process.env.TWILIO_ACCOUNT_SID,
+      process.env.TWILIO_AUTH_TOKEN
+    );
+    const call = await client.calls.create({
+      to,
+      from: process.env.TWILIO_DEFAULT_FROM,
+      twiml: '<Response><Say>Hello Terence, this is the VOIP-CRM test call.</Say></Response>'
+    });
+    return res.json({ sid: call.sid });
+  } catch (error) {
+    console.error('Error initiating test call:', error);
+    return res.status(500).json({ error: 'Failed to initiate call' });
+  }
+});
+
 });
 
 app.listen(port, () => {
