@@ -24,10 +24,17 @@ const port = process.env.PORT || 3000;
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+// Alias so https://.../test-call works
+app.all('/test-call', (req, res, next) => {
+  req.url = '/api/test-call';   // rewrite to real handler
+  next();
+});
+
 // Initialise Supabase client if configured
 let supabase = null;
 if (process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
-  supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+  supabase = createClient(process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY);
 }
 
 // Twilio configuration
@@ -126,6 +133,7 @@ app.get('/profile', async (req, res) => {
     res.status(500).json({ error: 'Unable to fetch profile' });
   }
 });
+
 // Test Call endpoint: initiates a call to the specified number using Twilio
 app.get('/test-call', async (req, res) => {
   const to = req.query.to;
@@ -148,6 +156,7 @@ app.get('/test-call', async (req, res) => {
     return res.status(500).json({ error: 'Failed to initiate call' });
   }
 });
+
 app.listen(port, () => {
   console.log(`VoIP CRM server listening on port ${port}`);
 });
