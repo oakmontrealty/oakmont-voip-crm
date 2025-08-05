@@ -1,0 +1,25 @@
+{
+  "name": "voip-crm",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "18"
+    }
+  },
+  "postCreateCommand": "npm install --prefix backend/oakmont-voip-crm/backend && npm install --prefix backend/oakmont-voip-crm/mobile && npm install --prefix voip-crm",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "3000": {
+      "label": "Backend Server",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "remoteUser": "node"
+}
