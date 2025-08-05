@@ -1,0 +1,28 @@
+name: iOS TestFlight Production Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-submit-ios:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/oakmont-voip-crm/mobile
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install EAS CLI
+        run: npm install -g eas-cli@latest
+      - name: Log EAS CLI version
+        run: eas --version
+      - name: Run EAS build & auto-submit
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }}
+          ASC_APP_ID: ${{ secrets.ASC_APP_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          eas build --platform ios --profile production --non-interactive --auto-submit
