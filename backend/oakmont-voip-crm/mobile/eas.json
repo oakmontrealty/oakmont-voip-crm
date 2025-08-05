@@ -1,16 +1,18 @@
 {
+  "cli": { "version": ">= 3.4.0" },
   "build": {
-    "ios": {
-      "workflow": "managed",
-      "scheme": "Oakmontvoipcrm",
-      "buildType": "release",
-      "bundleIdentifier": "com.oakmont.voipcrm"
+    "production": {
+      "ios": {
+        "scheme": "Oakmontvoipcrm"
+      }
     }
   },
   "submit": {
-    "ios": {
-      "ascAppId": "$ASC_APP_ID",
-      "appleTeamId": "$APPLE_TEAM_ID"
+    "production": {
+      "ios": {
+        "ascAppId": "$ASC_APP_ID",
+        "appleTeamId": "$APPLE_TEAM_ID"
+      }
     }
   }
 }
