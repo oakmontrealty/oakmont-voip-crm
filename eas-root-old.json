@@ -1,9 +1,12 @@
 {
   "build": {
     "ios": {
-      "workflow": "managed",
+     "workflow": "managed",
+
       "scheme": "oakmontvoipcrm",
+
       "buildType": "release",
+
       "bundleIdentifier": "com.oakmont.voipcrm"
     }
   },
