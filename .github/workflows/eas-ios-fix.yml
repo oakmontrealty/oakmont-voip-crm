@@ -1,4 +1,4 @@
-testname: iOS TestFlight Auto-Build Fixed
+name: iOS TestFlight Auto-Build Fixed
 
 on:
   workflow_dispatch:
