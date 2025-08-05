@@ -31,4 +31,4 @@ jobs:
           ASC_APP_ID: ${{ secrets.ASC_APP_ID }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: |
-          eas build --platform ios --profile ios --non-interactive --auto-submit --config eas.json
+          eas build --platform ios --profile ios --non-interactive --auto-submi
