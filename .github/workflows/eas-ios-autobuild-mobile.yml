@@ -1,0 +1,24 @@
+name: iOS TestFlight Mobile Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/oakmont-voip-crm/mobile/**"
+      - ".github/workflows/eas-ios-autobuild-mobile.yml"
+  workflow_dispatch:
+
+jobs:
+  build-and-submit-ios:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/oakmont-voip-crm/mobile
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+      - name: Log EAS CLI version
+        run: eas --version
+      - name: Trigger EAS Build & auto-submit
+        run: eas build --profile ios --non-interactive --auto-submit
