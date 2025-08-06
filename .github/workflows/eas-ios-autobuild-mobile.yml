@@ -21,4 +21,6 @@ jobs:
       - name: Log EAS CLI version
         run: eas --version
       - name: Trigger EAS Build & auto-submit
-        run: eas build --profile ios --platform ios --non-interactive --auto-submit --config mobile/eas-fixed.json
+        # Run EAS build for the iOS platform using the default configuration.
+        # The --config flag is omitted because the default eas.json now contains the correct settings.
+        run: eas build --profile ios --platform ios --non-interactive --auto-submit
