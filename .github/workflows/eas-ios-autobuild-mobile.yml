@@ -1,4 +1,4 @@
-name: iOS TestFlight Mobile Build
+name: ios TestFlight Mobile Build
 
 on:
   push:
@@ -21,6 +21,6 @@ jobs:
       - name: Log EAS CLI version
         run: eas --version
       - name: Trigger EAS Build & auto-submit
-        # Run EAS build for the iOS platform using the default configuration.
-        # The --config flag is omitted because the default eas.json now contains the correct settings.
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: eas build --profile ios --platform ios --non-interactive --auto-submit
