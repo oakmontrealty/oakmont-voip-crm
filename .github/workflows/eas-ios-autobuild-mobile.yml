@@ -20,7 +20,7 @@ jobs:
         run: npm install -g eas-cli
       - name: Log EAS CLI version
         run: eas --version
-      - name: Trigger EAS Build & auto-submit
+      - name: Trigger EAS Build
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build --profile ios --platform ios --non-interactive --auto-submit
+        run: eas build --platform ios --non-interactive
