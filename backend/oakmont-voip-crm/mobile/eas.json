@@ -5,18 +5,14 @@
   },
   "build": {
     "ios": {
-      "ios": {
-        "scheme": "Oakmontvoipcrm",
-        "bundleIdentifier": "com.oakmont.voipcrm"
-      }
+      "scheme": "oakmontvoipcrm",
+      "bundleIdentifier": "com.oakmont.voipcrm"
     }
   },
   "submit": {
     "ios": {
-      "ios": {
-        "ascAppId": "$ASC_APP_ID",
-        "appleTeamId": "$APPLE_TEAM_ID"
-      }
+      "ascAppId": "$ASC_APP_ID",
+      "appleTeamId": "$APPLE_TEAM_ID"
     }
   }
 }
