@@ -21,4 +21,4 @@ jobs:
       - name: Log EAS CLI version
         run: eas --version
       - name: Trigger EAS Build & auto-submit
-        run: eas build --profile ios --non-interactive --auto-submit
+        run: eas build --profile ios --platform ios --non-interactive --auto-submit --config mobile/eas-fixed.json
