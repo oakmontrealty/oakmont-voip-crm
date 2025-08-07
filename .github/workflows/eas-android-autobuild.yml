@@ -1,0 +1,26 @@
+name: Android Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/oakmont-voip-crm/mobile/**"
+      - ".github/workflows/eas-android-autobuild.yml"
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/oakmont-voip-crm/mobile
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+      - name: Log EAS CLI version
+        run: eas --version
+      - name: Trigger EAS Android Build
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas build --platform android --non-interactive
