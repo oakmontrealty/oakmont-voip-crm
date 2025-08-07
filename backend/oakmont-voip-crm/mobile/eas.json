@@ -4,6 +4,8 @@
     "appVersionSource": "local"
   },
   "build": {
-    "android": {}
+    "android": {
+      "credentialsSource": "local"
+    }
   }
 }
