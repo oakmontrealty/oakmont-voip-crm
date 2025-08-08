@@ -159,6 +159,96 @@ app.get('/api', (req, res) => {
   });
 });
 
+// Dialer page to make VoIP calls from the browser
+app.get('/dialer', (req, res) => {
+  res.set('Content-Type', 'text/html');
+  res.send(`<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Oakmont Dialer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+    .row { display:flex; gap:8px; align-items:center; margin: 8px 0; }
+    input { padding:8px; min-width: 260px; }
+    button { padding:8px 12px; cursor:pointer; }
+    #log { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; background:#f7f7f7; padding:12px; border-radius:6px; margin-top:12px; }
+  </style>
+  <script src="https://unpkg.com/@twilio/voice-sdk@2.9.1/dist/twilio-voice.min.js"></script>
+</head>
+<body>
+  <h1>Oakmont Dialer</h1>
+  <div class="row"><button id="btnInit">Initialise Device</button><span id="status">Not ready</span></div>
+  <div class="row">
+    <input id="to" placeholder="Enter number in E.164 e.g. +614XXXXXXXX" />
+    <button id="btnCall" disabled>Call</button>
+    <button id="btnHangup" disabled>Hang up</button>
+    <button id="btnMute" disabled>Mute</button>
+  </div>
+  <div id="log"></div>
+
+  <script>
+    const logEl = document.getElementById('log');
+    const statusEl = document.getElementById('status');
+    const toEl = document.getElementById('to');
+    const btnInit = document.getElementById('btnInit');
+    const btnCall = document.getElementById('btnCall');
+    const btnHangup = document.getElementById('btnHangup');
+    const btnMute = document.getElementById('btnMute');
+    let device, conn, muted = false;
+
+    function log(msg) { logEl.textContent += msg + '\n'; console.log(msg); }
+
+    async function getToken() {
+      const identity = 'agent_' + Date.now();
+      const resp = await fetch('/token?identity=' + encodeURIComponent(identity));
+      if (!resp.ok) throw new Error('Token fetch failed: ' + resp.status);
+      return resp.json();
+    }
+
+    btnInit.onclick = async () => {
+      try {
+        const { token, edge } = await getToken();
+        device = new Twilio.Voice.Device(token, {
+          codecPreferences: ['opus'],
+          edge: edge || 'au1',
+          maxAverageBitrate: 40000
+        });
+        device.on('ready', () => { statusEl.textContent = 'Ready'; btnCall.disabled = false; log('Device ready'); });
+        device.on('error', e => log('Device error: ' + e.message));
+        device.on('incoming', c => { conn = c; log('Incoming call'); });
+        device.on('disconnect', () => { conn = null; btnHangup.disabled = true; btnMute.disabled = true; log('Disconnected'); });
+        log('Initialising device...');
+      } catch (e) { log('Init failed: ' + e.message); }
+    };
+
+    btnCall.onclick = async () => {
+      try {
+        const to = toEl.value.trim();
+        if (!to) { alert('Enter destination number'); return; }
+        conn = await device.connect({ params: { To: to } });
+        btnHangup.disabled = false; btnMute.disabled = false;
+        conn.on('accept', () => log('Call accepted'));
+        conn.on('disconnect', () => { btnHangup.disabled = true; btnMute.disabled = true; log('Call ended'); });
+        conn.on('error', e => log('Conn error: ' + e.message));
+        log('Dialling ' + to + '...');
+      } catch (e) { log('Call failed: ' + e.message); }
+    };
+
+    btnHangup.onclick = () => { if (conn) conn.disconnect(); };
+    btnMute.onclick = () => {
+      if (conn) {
+        muted = !muted;
+        conn.mute(muted);
+        btnMute.textContent = muted ? 'Unmute' : 'Mute';
+      }
+    };
+  </script>
+</body>
+</html>`);
+});
+
 // Start the server.
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
