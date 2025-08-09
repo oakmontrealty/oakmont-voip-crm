@@ -247,9 +247,36 @@ app.get('/dialer', (req, res) => {
   </script>
 </body>
 </html>`);
-});
+}
+   
+       ).
+  
+  const TEST_CALL_TOKEN = process.env.TEST_CALL_TOKEN;
+const to = process.env.TEST_CALL_TO;
+const from = process.env.TWILIO_NUMBER;
+const mp3 = process.env.PRANK_MP3_URL || 'https://demo.twilio.com/docs/classic.mp3';
 
-// Start the server.
+async function callMyClipHandler(req, res) {
+  try {
+    if (TEST_CALL_TOKEN) {
+      const t = req.method === 'GET' ? req.query.token : req.body?.token;
+      if (t !== TEST_CALL_TOKEN) return res.status(401).json({ ok: false, error: 'unauthorized' });
+    }
+    const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    const call = await twilio.calls.create({
+      to,
+      from,
+      twiml: `<Response><Play>${mp3}</Play></Response>`
+    });
+    return res.json({ ok: true, sid: call.sid });
+  } catch (err) {
+    return res.status(500).json({ ok: false, error: 'call-failed' });
+  }
+}
+
+app.get('/api/call-my-clip', callMyClipHandler);
+app.post('/api/call-my-clip', callMyClipHandler);
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+/
