@@ -247,15 +247,8 @@ app.get('/dialer', (req, res) => {
   </script>
 </body>
 </html>`);
-}
-   
-       ).
-  
-  cconst TEST_CALL_TO = process.env.TEST_CALL_TO;
-const TWILIO_NUMBER = process.env.TWILIO_NUMBER;
-const PRANK_MP3_URL = process.env.PRANK_MP3_URL || 'https://demo.twilio.com/docs/classic.mp3';
 
-async function callMyClipHandler(req, res) {
+ async function callMyClipHandler(req, res) {
   try {
     const to = process.env.TEST_CALL_TO;
     const from = process.env.TWILIO_NUMBER;
