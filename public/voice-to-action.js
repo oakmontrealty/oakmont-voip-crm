@@ -1,5 +1,5 @@
 // Updated with your Supabase details
-const supabaseUrl = 'https://didmparfeydjbcuzgaif.supabase.co'; // Correct API URL
+const supabaseUrl = 'https://didmparfeydjbcuzgaif.supabase.co'; // Your Supabase API URL
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpZG1wYXJmZXlkamJjdXpnYWlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5MzQ4MjMsImV4cCI6MjA2OTUxMDgyM30.3pQvnFHqjLJwEZhDkFsVs6-SPqe87DNf2m0YuVbEuvw'; // Your anon public key
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
