@@ -1,6 +1,6 @@
-// Replace with your actual Supabase details
-const supabaseUrl = 'https://yourprojectid.supabase.co'; // Paste your Supabase URL here (e.g., https://xy123456789.supabase.co)
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Paste your anon public key here (full long string from Supabase API)
+// Replace with your actual Supabase anon public key
+const supabaseUrl = 'https://supabase.com/dashboard/project/didmparfeydjbcuzgaif'; // Updated with your URL
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Paste your full anon public key here from Supabase Settings > API
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
