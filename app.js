@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Just Call Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="voice-to-action.js" defer></script>
-</head>
-<body>
-  <h1>Log Open House Attendee</h1>
-  <button id="log-attendee-btn">Speak to Log</button>
-  <p>Click and say: "Name, Phone" like "Michael, 0412345678"</p>
-</body>
-</html>
+const express = require('express');
+const path = require('path');
+const app = express();
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server on port ${port}`));
