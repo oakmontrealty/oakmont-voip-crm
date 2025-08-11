@@ -1,5 +1,5 @@
 // Replace with your actual Supabase anon public key
-const supabaseUrl = 'https://supabase.com/dashboard/project/didmparfeydjbcuzgaif'; // Updated with your URL
+const supabaseUrl = 'https://didmparfeydjbcuzgaif.supabase.co'; // Correct API URL derived from your dashboard link
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Paste your full anon public key here from Supabase Settings > API
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
